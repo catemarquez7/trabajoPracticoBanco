@@ -117,16 +117,23 @@ public class Usuario extends Persona{
 		do {
 			
 			mail = Validaciones.ValidarContras("Ingrese su mail: ");
-			flag = true;
 			
-		for (Usuario usu : usuarios) {
-			if (mail.equals(usu.getMail())) {
-				JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+			if (mail.contains("@") && mail.contains(".com")) {
+				for (Usuario usu : usuarios) {
+					if (mail.equals(usu.getMail())) {
+						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+				                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						flag = false;
+						break;
+					}else {
+						flag = true;
+					}
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "El mail ingresado no es válido (falta @ o .com)", "ERROR!", JOptionPane.DEFAULT_OPTION,
 		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 				flag = false;
-				break;
 			}
-		}
 		} while (flag == false);
 		
 	return mail;
@@ -160,6 +167,7 @@ public class Usuario extends Persona{
 				flag = false;
 			}
 		} while (flag == false);
+		
 	return dni; 
 	}//fin
 	
@@ -183,6 +191,7 @@ public class Usuario extends Persona{
 			}
 		}
 		} while (flag == false);
+		
 	return usuario;	
 	}//fin
 	
@@ -193,19 +202,28 @@ public class Usuario extends Persona{
 		
 		do {
 			
-			cont = Validaciones.ValidarContras("Ingrese su contraseña: ");
-			cont2 = Validaciones.ValidarContras("Ingrese su contraseña nuevamente: ");
+			cont = Validaciones.ValidarContras("Ingrese su contraseña:\n(Debe tener 8 dígitos)");
 			
-			if (cont.equals(cont2)) {
-				JOptionPane.showMessageDialog(null, "Todos los datos son validos, su usuario fue registrado", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
-		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-				flag = true;
-			} else {
-				JOptionPane.showMessageDialog(null, "Las contraseñas no son identicas, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+			if (cont.length() == 8) {
+				cont2 = Validaciones.ValidarContras("Ingrese su contraseña nuevamente: ");
+				
+				if (cont.equals(cont2)) {
+					JOptionPane.showMessageDialog(null, "Todos los datos son válidos, su usuario fue registrado", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
+			                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+					flag = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "Las contraseñas no son idénticas, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+			                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+					flag = false;
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Su contraseña debe tener 8 dígitos", "ERROR!", JOptionPane.DEFAULT_OPTION,
 		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 				flag = false;
 			}
+			
 			} while (flag == false);
+		
 	return cont;	
 	}
 	
