@@ -95,12 +95,24 @@ public class Usuario extends Persona{
 	}//fin
 	
 	public static void Registro() {
-		boolean flag = false;
+		String nombre, domicilio, mail, documento, usuario, cont;
 		int dni;
-		String nombre, domicilio, mail, documento, usuario, cont, cont2;
+		boolean flag = false;
 		
 		nombre = Validaciones.ValidarLetras("Ingrese su nombre: ");
 		domicilio = Validaciones.ValidarContras("Ingrese su domicilio: ");
+		mail = Usuario.IngresoMail();
+		dni = Usuario.IngresoDni();
+		usuario = Usuario.IngresoUser();
+		cont = Usuario.IngresoContra();
+		
+		usuarios.add(new Usuario(nombre, domicilio, mail, dni, usuario, cont));
+	}//fin
+	
+	public static String IngresoMail() {
+		
+		String mail;
+		boolean flag = false;
 		
 		do {
 			
@@ -117,8 +129,17 @@ public class Usuario extends Persona{
 		}
 		} while (flag == false);
 		
-		do {
+	return mail;
+	}//fin
+	
+	public static int IngresoDni() {
 		
+		String documento;
+		int dni;
+		boolean flag = false;
+		
+		do {
+			
 			dni = Validaciones.ValidarNum("Ingrese su número de documento: ");
 			documento = Integer.toString(dni);
 			
@@ -129,6 +150,8 @@ public class Usuario extends Persona{
 				                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 						flag = false;
 						break;
+					}else {
+						flag = true;
 					}
 				}
 			}else {
@@ -137,11 +160,17 @@ public class Usuario extends Persona{
 				flag = false;
 			}
 		} while (flag == false);
+	return dni; 
+	}//fin
+	
+	public static String IngresoUser() {
 		
+		String usuario;
+		boolean flag = false;
 		
 		do {
 			
-			usuario = Validaciones.ValidarContras("Ingrese su nombre de usuario: ");
+			usuario = Validaciones.ValidarLetras("Ingrese su nombre de usuario:\n(No puede ingresar números en su nombre de usuario) ");
 			
 		for (Usuario usu : usuarios) {
 			if (usuario.equals(usu.getN_usuario())) {
@@ -149,27 +178,36 @@ public class Usuario extends Persona{
 		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 				flag = false;
 				break;
+			}else {
+				flag = true;
 			}
 		}
 		} while (flag == false);
+	return usuario;	
+	}//fin
+	
+	public static String IngresoContra() {
+	
+		String cont, cont2;
+		boolean flag = false;
 		
 		do {
 			
-		cont = Validaciones.ValidarContras("Ingrese su contraseña: ");
-		cont2 = Validaciones.ValidarContras("Ingrese su contraseña nuevamente: ");
-		
-		if (cont.equals(cont2)) {
-			JOptionPane.showMessageDialog(null, "Todos los datos son validos, su usuario fue registrado", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
-	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-			usuarios.add(new Usuario(nombre, domicilio, mail, dni, usuario, cont));
-			flag = true;
-		} else {
-			JOptionPane.showMessageDialog(null, "Las contraseñas no son identicas, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-			flag = false;
-		}
-		} while (flag == false);
-		
-	}//fin
+			cont = Validaciones.ValidarContras("Ingrese su contraseña: ");
+			cont2 = Validaciones.ValidarContras("Ingrese su contraseña nuevamente: ");
+			
+			if (cont.equals(cont2)) {
+				JOptionPane.showMessageDialog(null, "Todos los datos son validos, su usuario fue registrado", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
+		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				flag = true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no son identicas, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				flag = false;
+			}
+			} while (flag == false);
+	return cont;	
+	}
+	
 	
 }//final

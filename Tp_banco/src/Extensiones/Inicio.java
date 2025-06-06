@@ -2,6 +2,6 @@ package Extensiones;
 
 public enum Inicio {
 
-	Iniciar_sesion, Registrarse;
+	Iniciar_sesion, Registrarse, Salir;
 	
 }
