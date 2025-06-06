@@ -95,9 +95,9 @@ public class Usuario extends Persona{
 	}//fin
 	
 	public static void Registro() {
-		String nombre, domicilio, mail, documento, usuario, cont;
+		
+		String nombre, domicilio, mail, usuario, cont;
 		int dni;
-		boolean flag = false;
 		
 		nombre = Validaciones.ValidarLetras("Ingrese su nombre: ");
 		domicilio = Validaciones.ValidarContras("Ingrese su domicilio: ");
@@ -107,6 +107,7 @@ public class Usuario extends Persona{
 		cont = Usuario.IngresoContra();
 		
 		usuarios.add(new Usuario(nombre, domicilio, mail, dni, usuario, cont));
+		
 	}//fin
 	
 	public static String IngresoMail() {
@@ -137,6 +138,7 @@ public class Usuario extends Persona{
 		} while (flag == false);
 		
 	return mail;
+	
 	}//fin
 	
 	public static int IngresoDni() {
@@ -168,7 +170,8 @@ public class Usuario extends Persona{
 			}
 		} while (flag == false);
 		
-	return dni; 
+	return dni;
+	
 	}//fin
 	
 	public static String IngresoUser() {
@@ -193,6 +196,7 @@ public class Usuario extends Persona{
 		} while (flag == false);
 		
 	return usuario;	
+	
 	}//fin
 	
 	public static String IngresoContra() {
@@ -224,8 +228,9 @@ public class Usuario extends Persona{
 			
 			} while (flag == false);
 		
-	return cont;	
-	}
+	return cont;
+	
+	}//fin
 	
 	
 }//final

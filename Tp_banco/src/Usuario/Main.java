@@ -12,7 +12,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		int eleccion, eleccion1;
-		boolean ingreso = false;
 		
 		Usuario.CargoUsuarios();
 		
@@ -29,7 +28,6 @@ public class Main {
 		case 0: //iniciar sesion
 			
 			Usuario.Login();
-			ingreso = true;
 			
 			do {
 				
