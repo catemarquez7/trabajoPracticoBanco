@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import Extensiones.Menu;
 import Extensiones.Validaciones;
 import Usuario.Main;
 
@@ -12,6 +13,7 @@ public class Usuario extends Persona{
 
 	protected String n_usuario;
 	protected String contrasenia;
+	
 	static LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
 	
 	public Usuario(String nombre, String domicilio, String mail, int documento, String n_usuario, String contrasenia) {
@@ -49,8 +51,17 @@ public class Usuario extends Persona{
 		return "Usuario [n_usuario=" + n_usuario + ", contraseña=" + contrasenia + "]";
 	}
 	
-	public static void CargoUsuarios() {
-		usuarios.add(new Usuario("Gamaliel", "Corrientes 2037", "gamaliel@davinci.edu.ar", 12345678, "Ghami", "Ghamiaprobanos@"));
+	public static void CargaUsuarios() {
+		Usuario u1 = new Usuario("Gamaliel", "Corrientes 2037", "gamaliel@davinci.edu.ar", 12345678, "ghami", "ghamiaprobanos1");
+		Usuario u2 = new Usuario("Victoria", "Martin Fierro 1550", "vicotria@davinci.edu.ar", 46789087, "vicky", "12345678");
+		Usuario u3 = new Usuario("Caterina", "Quesada 3849", "caterina@davinci.edu.ar", 46756432, "cate", "87654321");
+		usuarios.add(u1);
+		usuarios.add(u2);
+		usuarios.add(u3);
+		Cuenta.cuentas.add(new Cuenta(u1, 10000));
+		Cuenta.cuentas.add(new Cuenta(u2, 25000));
+		Cuenta.cuentas.add(new Cuenta(u3, 20000));
+
 	}
 	
 	public static void Login() {
@@ -79,9 +90,9 @@ public class Usuario extends Persona{
 	    
 	    do {
 	    	
-	    	String ingresop = Validaciones.ValidarContras("Ingrese su contraseña:");
+	    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
 	    
-	    if (existente.getContrasenia().equals(ingresop)) {
+	    if (existente.getContrasenia().equals(ingreso)) {
 	        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido!", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
 	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 	        flag2 = true;
@@ -92,6 +103,47 @@ public class Usuario extends Persona{
 	    }
 	    } while (flag2 == false);
 	
+	    
+	    // menu principal
+	    int eleccion1=0;
+	    
+	    	do {
+			
+			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: ", "INICIO DE SESION", 0, 0,
+					new ImageIcon(Main.class.getResource("/Img/prueba.png")), Menu.values(), Menu.values());
+			
+			switch (eleccion1) {
+			
+			case 0: //depositar
+				
+				break;
+
+			case 1: //retirar
+				
+				break;
+				
+			case 2: //transferir
+				
+				break;
+
+			case 3: //ver movimientos
+				
+				break;
+				
+			case 4: //cerrar sesion
+				
+				JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
+						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				
+				break;
+				
+			}//fin switch
+			
+			} while (eleccion1 != 4);
+	    
+	    
+	    
+	    
 	}//fin
 	
 	public static void Registro() {
@@ -106,7 +158,10 @@ public class Usuario extends Persona{
 		usuario = Usuario.IngresoUser();
 		cont = Usuario.IngresoContra();
 		
-		usuarios.add(new Usuario(nombre, domicilio, mail, dni, usuario, cont));
+		Usuario u = new Usuario(nombre, domicilio, mail, dni, usuario, cont);
+		usuarios.add(u);
+		Cuenta.cuentas.add(new Cuenta(u, 15000));		
+		
 		
 	}//fin
 	
@@ -152,7 +207,7 @@ public class Usuario extends Persona{
 			dni = Validaciones.ValidarNum("Ingrese su número de documento: ");
 			documento = Integer.toString(dni);
 			
-			if (documento.length() == 8) {
+			if (documento.length() >= 8) {
 				for (Usuario usu : usuarios) {
 					if (dni == usu.getDocumento()) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
@@ -164,7 +219,7 @@ public class Usuario extends Persona{
 					}
 				}
 			}else {
-				JOptionPane.showMessageDialog(null, "Su número de documento debe tener 8 dígitos", "ERROR!", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.showMessageDialog(null, "Su número de documento debe tener mas de 8 dígitos.", "ERROR!", JOptionPane.DEFAULT_OPTION,
 		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 				flag = false;
 			}

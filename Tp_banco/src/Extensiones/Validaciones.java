@@ -76,7 +76,7 @@ public class Validaciones {
 		return data;
 	}//fin
 	
-//Validacion de ingreso de palabras (enter)	
+// Validacion de ingreso de palabras (enter)	
 
 	public static String ValidarContras(String mensaje) {
 		
