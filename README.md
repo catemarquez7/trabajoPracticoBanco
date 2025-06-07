@@ -6,3 +6,4 @@
 
 <p>Diagrama de clases:</p>
 
+<img src="diagrama.png" alt="diagrama de clases" width=100 height=200 >
