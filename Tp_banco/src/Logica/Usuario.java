@@ -2,6 +2,7 @@ package Logica;
 
 import java.util.LinkedList;
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -10,18 +11,21 @@ import Extensiones.Validaciones;
 import Usuario.Main;
 
 public class Usuario extends Persona{
-
+	//atributos
 	protected String n_usuario;
 	protected String contrasenia;
 	
+	//clase
 	static LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
 	
+	//constructor
 	public Usuario(String nombre, String domicilio, String mail, int documento, String n_usuario, String contrasenia) {
 		super(nombre, domicilio, mail, documento);
 		this.n_usuario = n_usuario;
 		this.contrasenia = contrasenia;
 	}
 
+	//getters y setters
 	public String getN_usuario() {
 		return n_usuario;
 	}
@@ -51,6 +55,7 @@ public class Usuario extends Persona{
 		return "Usuario [n_usuario=" + n_usuario + ", contraseña=" + contrasenia + "]";
 	}
 	
+	//metodos
 	public static void CargaUsuarios() {
 		Usuario u1 = new Usuario("Gamaliel", "Corrientes 2037", "gamaliel@davinci.edu.ar", 12345678, "ghami", "ghamiaprobanos1");
 		Usuario u2 = new Usuario("Victoria", "Martin Fierro 1550", "vicotria@davinci.edu.ar", 46789087, "vicky", "12345678");
@@ -65,11 +70,13 @@ public class Usuario extends Persona{
 	}
 	
 	public static void Login() {
-		
+		//variables
 	    Usuario existente = null;
+	    Cuenta log = null;
 	    boolean flag1 = false;
 	    boolean flag2 = false;
 	    
+	    //login
 	    do {
 			
 	    	String ingreso = Validaciones.ValidarLetras("Ingrese su usuario:");
@@ -77,6 +84,11 @@ public class Usuario extends Persona{
 	    for (Usuario user : usuarios) {
 	        if (user.getN_usuario().equals(ingreso)) {
 	            existente = user;
+	            for (Cuenta cuenta : Cuenta.cuentas) {
+					if (cuenta.getUsuario().equals(user)) {
+						log = cuenta;
+					}
+				}
 	            flag1 = true;
 	            break;
 	        }
@@ -93,7 +105,7 @@ public class Usuario extends Persona{
 	    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
 	    
 	    if (existente.getContrasenia().equals(ingreso)) {
-	        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido!", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
+	        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido/a " + existente.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
 	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 	        flag2 = true;
 	    } else {
@@ -104,45 +116,40 @@ public class Usuario extends Persona{
 	    } while (flag2 == false);
 	
 	    
-	    // menu principal
+	    //inicio programa
 	    int eleccion1=0;
 	    
-	    	do {
+	    	do { //menu principal
 			
-			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: ", "INICIO DE SESION", 0, 0,
+			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \n Titular: " + log.getUsuario().getNombre() + "\n Saldo actual $" + log.getSaldo() , "INICIO", 0, 0,
 					new ImageIcon(Main.class.getResource("/Img/prueba.png")), Menu.values(), Menu.values());
 			
 			switch (eleccion1) {
 			
 			case 0: //depositar
-				
+				log.depositar();
 				break;
 
 			case 1: //retirar
-				
+				log.retirar();
 				break;
 				
 			case 2: //transferir
-				
+				log.transferir();
 				break;
 
 			case 3: //ver movimientos
-				
+				log.verMovimientos();
 				break;
 				
 			case 4: //cerrar sesion
-				
 				JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
 						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-				
 				break;
 				
 			}//fin switch
 			
 			} while (eleccion1 != 4);
-	    
-	    
-	    
 	    
 	}//fin
 	
@@ -286,6 +293,9 @@ public class Usuario extends Persona{
 	return cont;
 	
 	}//fin
+	
+	
+	
 	
 	
 }//final

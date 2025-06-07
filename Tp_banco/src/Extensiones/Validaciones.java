@@ -7,10 +7,9 @@ import Usuario.Main;
 
 public class Validaciones {
 	
-// Validacion de ingreso de numeros (-0, enter, letras)
+//validacion de ingreso de numeros (-0, enter, letras)
 	
 	public static int ValidarNum(String mensaje) {
-		
 		String data;
 		boolean flag;
 		int numero = 0;
@@ -46,7 +45,7 @@ public class Validaciones {
 		return numero;
 	}//fin
 
-// Validacion de ingreso de palabras (enter, nros)
+//validacion de ingreso de palabras (enter, nros)
 	
 	public static String ValidarLetras(String mensaje) {
 		
@@ -76,7 +75,7 @@ public class Validaciones {
 		return data;
 	}//fin
 	
-// Validacion de ingreso de palabras (enter)	
+//validacion de ingreso de palabras (enter)	
 
 	public static String ValidarContras(String mensaje) {
 		
@@ -94,4 +93,6 @@ public class Validaciones {
 		return data;
 
 	}
+ 
+
 }//final
