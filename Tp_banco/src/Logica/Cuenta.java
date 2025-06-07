@@ -121,7 +121,7 @@ public class Cuenta {
 		JOptionPane.showMessageDialog(null, this.getUsuario().getNombre() + ", ahora contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 	}
 	
-	public void verMovimientos() {
+	public void movimientos() {
 		
 	}
 	

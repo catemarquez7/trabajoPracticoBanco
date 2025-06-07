@@ -139,7 +139,7 @@ public class Usuario extends Persona{
 				break;
 
 			case 3: //ver movimientos
-				log.verMovimientos();
+				log.movimientos();
 				break;
 				
 			case 4: //cerrar sesion
@@ -293,8 +293,6 @@ public class Usuario extends Persona{
 	return cont;
 	
 	}//fin
-	
-	
 	
 	
 	

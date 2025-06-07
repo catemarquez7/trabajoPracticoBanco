@@ -15,7 +15,7 @@ public class Main {
 		
 		//inicio
 		Usuario.CargaUsuarios();
-		JOptionPane.showMessageDialog(null, "Bienvenido a ", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
+		JOptionPane.showMessageDialog(null, "Bienvenido al Banco de la Nacion Argentina!", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
 				new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 		do {	
 			eleccion = JOptionPane.showOptionDialog(null, "Seleccione: ", "INICIO DE SESION", 0, 0,
