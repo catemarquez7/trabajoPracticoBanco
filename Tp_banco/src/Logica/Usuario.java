@@ -270,7 +270,7 @@ public class Usuario extends Persona{
 			
 			cont = Validaciones.ValidarContras("Ingrese su contraseña:\n(Debe tener 8 dígitos)");
 			
-			if (cont.length() == 8) {
+			if (cont.length() >= 8) {
 				cont2 = Validaciones.ValidarContras("Ingrese su contraseña nuevamente: ");
 				
 				if (cont.equals(cont2)) {

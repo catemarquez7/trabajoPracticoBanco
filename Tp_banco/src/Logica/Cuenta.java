@@ -18,6 +18,7 @@ public class Cuenta {
 	//clase
 	static LinkedList<Cuenta> cuentas = new LinkedList<Cuenta>();
 
+
 	//constructor
 	public Cuenta(Usuario usuario, double saldo) {
 		this.usuario = usuario;
@@ -78,6 +79,10 @@ public class Cuenta {
 				disponibles.get(i).setSaldo(disponibles.get(i).getSaldo()+monto);
 				this.setSaldo(this.getSaldo()-monto);
 				
+				//registro movimientos
+				this.movimientos.add("Transferiste $" + monto + " a " + disponibles.get(i).getUsuario().getN_usuario());
+				disponibles.get(i).getMovimientos().add("Recibiste $" + monto + " de " + this.getUsuario().getN_usuario());
+				
 				JOptionPane.showMessageDialog(null, "Ahora " + disponibles.get(i).getUsuario().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo() + "\n Y vos con $" + this.getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 			}
 		}
@@ -105,10 +110,17 @@ public class Cuenta {
 						monto = Validaciones.ValidarNum("Escriba el monto a depositar.");
 						
 						cuentas.get(i).setSaldo(cuentas.get(i).getSaldo()+monto);
+						this.setSaldo(this.getSaldo()-monto);
+						
+						//registro movimientos
+						this.movimientos.add("Depositaste $" + monto + " a " + cuentas.get(i).getUsuario().getN_usuario());
+						cuentas.get(i).getMovimientos().add("Te depositaron $" + monto + " desde " + this.getUsuario().getN_usuario());
 						
 						JOptionPane.showMessageDialog(null, "Ahora " + cuentas.get(i).getUsuario().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 					}
 				}
+	
+	
 	}
 	
 	public void retirar() {
@@ -119,11 +131,29 @@ public class Cuenta {
 		this.setSaldo(this.getSaldo()-monto);
 		
 		JOptionPane.showMessageDialog(null, this.getUsuario().getNombre() + ", ahora contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		
+		//registro movimientos
+		this.movimientos.add("Retiraste $" + monto);
+		
 	}
 	
 	public void movimientos() {
 		
+		if (movimientos.isEmpty()) {
+			
+	        JOptionPane.showMessageDialog(null, "No hay movimientos registrados.", "MOVIMIENTOS", JOptionPane.INFORMATION_MESSAGE);
+	        
+	    } else {
+	    	
+	    	String historial = "Historial de movimientos:\n";
+	        for (String mov : movimientos) {
+	            historial += mov + "\n";
+	            
+	        }
+	        JOptionPane.showMessageDialog(null, historial.toString(), "MOVIMIENTOS", JOptionPane.INFORMATION_MESSAGE);
+	    }
 	}
+	
 	
 	public LinkedList<Cuenta> disponiblesTransferir(){
 		
