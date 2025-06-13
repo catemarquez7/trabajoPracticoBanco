@@ -1,6 +1,6 @@
 package Extensiones;
 
-public enum Menu {
+public enum MenuCliente {
 
 	Depositar, Retirar, Transferir, Ver_Movimientos, Cerrar_Sesion;
 	

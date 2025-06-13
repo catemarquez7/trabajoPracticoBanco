@@ -5,14 +5,16 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import Extensiones.MenuCliente;
 import Extensiones.Validaciones;
 import Usuario.Main;
 
 public class Cuenta {
 
 	//atributos
-	protected Usuario usuario;
+	protected Cliente cliente;
 	protected double saldo;
+	protected String estado;
 	protected LinkedList<String> movimientos = new LinkedList<String>();
 	
 	//clase
@@ -20,18 +22,19 @@ public class Cuenta {
 
 
 	//constructor
-	public Cuenta(Usuario usuario, double saldo) {
-		this.usuario = usuario;
+	public Cuenta(Cliente cliente, double saldo) {
+		this.cliente = cliente;
 		this.saldo = saldo;
+		this.estado = "Activo";
 	}
 
 	//getters y setters
-	public Usuario getUsuario() {
-		return usuario;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public double getSaldo() {
@@ -40,6 +43,22 @@ public class Cuenta {
 
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public static LinkedList<Cuenta> getCuentas() {
+		return cuentas;
+	}
+
+	public static void setCuentas(LinkedList<Cuenta> cuentas) {
+		Cuenta.cuentas = cuentas;
 	}
 
 	public LinkedList<String> getMovimientos() {
@@ -52,10 +71,47 @@ public class Cuenta {
 
 	@Override
 	public String toString() {
-		return "Cuenta [usuario=" + usuario + ", saldo=" + saldo + ", movimientos=" + movimientos + "]";
+		return "Cuenta [clente=" + cliente + ", saldo=" + saldo + ", movimientos=" + movimientos + "]";
 	}
 	
 	//metodos
+	
+	public static void menuCliente(Cuenta log) {
+		 int eleccion1=0;
+		    
+	    	do { //menu principal
+			
+			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \nTitular: " + log.getCliente().getNombre() + "\n Saldo actual $" + log.getSaldo() , "INICIO", 0, 0,
+					new ImageIcon(Main.class.getResource("/Img/prueba.png")), MenuCliente.values(), MenuCliente.values());
+			
+			switch (eleccion1) {
+			
+			case 0: //depositar
+				log.depositar();
+				break;
+
+			case 1: //retirar
+				log.retirar();
+				break;
+				
+			case 2: //transferir
+				log.transferir();
+				break;
+
+			case 3: //ver movimientos
+				log.movimientos();
+				break;
+				
+			case 4: //cerrar sesion
+				JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
+						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				break;
+				
+			}//fin switch
+			
+			} while (eleccion1 != 4);
+	}
+	
 	public void transferir() {
 		//variables
 		String opcion="";
@@ -63,7 +119,7 @@ public class Cuenta {
 		LinkedList<Cuenta> disponibles = this.disponiblesTransferir();
 		String[] disponiblesMenu = new String[disponibles.size()];
 		for (int i = 0; i < disponibles.size(); i++) {
-			String info = disponibles.get(i).getUsuario().getN_usuario();
+			String info = disponibles.get(i).getCliente().getN_usuario();
 			disponiblesMenu[i] = info;
 		}
 		
@@ -71,8 +127,8 @@ public class Cuenta {
 		opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el usuario al quien desea transferirle:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/prueba.png")), disponiblesMenu, disponiblesMenu[0]);	
 
 		for (int i = 0; i < disponibles.size(); i++) {
-			if (disponibles.get(i).getUsuario().getN_usuario().equals(opcion)) {
-				JOptionPane.showMessageDialog(null, disponibles.get(i).getUsuario().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			if (disponibles.get(i).getCliente().getN_usuario().equals(opcion)) {
+				JOptionPane.showMessageDialog(null, disponibles.get(i).getCliente().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 				
 				monto = this.ValidarSaldo("Escriba el monto a transferir. \nUsted cuenta con $" + this.getSaldo());
 				
@@ -80,10 +136,10 @@ public class Cuenta {
 				this.setSaldo(this.getSaldo()-monto);
 				
 				//registro movimientos
-				this.movimientos.add("Transferiste $" + monto + " a " + disponibles.get(i).getUsuario().getN_usuario());
-				disponibles.get(i).getMovimientos().add("Recibiste $" + monto + " de " + this.getUsuario().getN_usuario());
+				this.movimientos.add("Transferiste $" + monto + " a " + disponibles.get(i).getCliente().getN_usuario());
+				disponibles.get(i).getMovimientos().add("Recibiste $" + monto + " de " + this.getCliente().getN_usuario());
 				
-				JOptionPane.showMessageDialog(null, "Ahora " + disponibles.get(i).getUsuario().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo() + "\n Y vos con $" + this.getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				JOptionPane.showMessageDialog(null, "Ahora " + disponibles.get(i).getCliente().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo() + "\n Y vos con $" + this.getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 			}
 		}
 		
@@ -95,7 +151,7 @@ public class Cuenta {
 		double monto=0;
 		String[] disponiblesMenu = new String[cuentas.size()];
 		for (int i = 0; i < cuentas.size(); i++) {
-			String info = cuentas.get(i).getUsuario().getN_usuario();
+			String info = cuentas.get(i).getCliente().getN_usuario();
 			disponiblesMenu[i] = info;
 				}		
 
@@ -103,20 +159,19 @@ public class Cuenta {
 		opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el usuario al quien desea depositarle:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/prueba.png")), disponiblesMenu, disponiblesMenu[0]);	
 
 				for (int i = 0; i < cuentas.size(); i++) {
-					if (cuentas.get(i).getUsuario().getN_usuario().equals(opcion)) {
+					if (cuentas.get(i).getCliente().getN_usuario().equals(opcion)) {
 						
-						JOptionPane.showMessageDialog(null, cuentas.get(i).getUsuario().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						JOptionPane.showMessageDialog(null, cuentas.get(i).getCliente().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 						
 						monto = Validaciones.ValidarNum("Escriba el monto a depositar.");
 						
 						cuentas.get(i).setSaldo(cuentas.get(i).getSaldo()+monto);
-						this.setSaldo(this.getSaldo()-monto);
 						
 						//registro movimientos
-						this.movimientos.add("Depositaste $" + monto + " a " + cuentas.get(i).getUsuario().getN_usuario());
-						cuentas.get(i).getMovimientos().add("Te depositaron $" + monto + " desde " + this.getUsuario().getN_usuario());
+						this.movimientos.add("Depositaste $" + monto + " a " + cuentas.get(i).getCliente().getN_usuario());
+						cuentas.get(i).getMovimientos().add("Te depositaron $" + monto + " desde " + this.getCliente().getN_usuario());
 						
-						JOptionPane.showMessageDialog(null, "Ahora " + cuentas.get(i).getUsuario().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						JOptionPane.showMessageDialog(null, "Ahora " + cuentas.get(i).getCliente().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 					}
 				}
 	
@@ -124,13 +179,13 @@ public class Cuenta {
 	}
 	
 	public void retirar() {
-		JOptionPane.showMessageDialog(null, this.getUsuario().getNombre() + ", contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		JOptionPane.showMessageDialog(null, this.getCliente().getNombre() + ", contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 		
 		double monto = this.ValidarSaldo("Ingrese el monto a retirar:");
 		
 		this.setSaldo(this.getSaldo()-monto);
 		
-		JOptionPane.showMessageDialog(null, this.getUsuario().getNombre() + ", ahora contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		JOptionPane.showMessageDialog(null, this.getCliente().getNombre() + ", ahora contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 		
 		//registro movimientos
 		this.movimientos.add("Retiraste $" + monto);
@@ -154,19 +209,17 @@ public class Cuenta {
 	    }
 	}
 	
-	
 	public LinkedList<Cuenta> disponiblesTransferir(){
 		
 		LinkedList<Cuenta> disponibles = new LinkedList<Cuenta>();
 		
 		for (Cuenta cuenta : cuentas) {
-			if (!cuenta.getUsuario().getN_usuario().equals(this.getUsuario().getN_usuario())) {
+			if (!cuenta.getCliente().getN_usuario().equals(this.getCliente().getN_usuario())) {
 				disponibles.add(cuenta);
 			}
 		}
 		return disponibles; 
 	}
-	
 	
 	//valida -0, enter, letras y !<saldo
 	public int ValidarSaldo(String mensaje) {

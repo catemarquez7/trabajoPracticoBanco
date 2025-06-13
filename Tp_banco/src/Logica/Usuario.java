@@ -1,23 +1,16 @@
 package Logica;
 
-import java.util.LinkedList;
-
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import Extensiones.Menu;
 import Extensiones.Validaciones;
 import Usuario.Main;
 
-public class Usuario extends Persona{
+public abstract class Usuario extends Persona{
 	//atributos
 	protected String n_usuario;
 	protected String contrasenia;
-	
-	//clase
-	static LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
-	
+		
 	//constructor
 	public Usuario(String nombre, String domicilio, String mail, int documento, String n_usuario, String contrasenia) {
 		super(nombre, domicilio, mail, documento);
@@ -42,137 +35,155 @@ public class Usuario extends Persona{
 		this.contrasenia = contrasenia;
 	}
 
-	public static LinkedList<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public static void setUsuarios(LinkedList<Usuario> usuarios) {
-		Usuario.usuarios = usuarios;
-	}
-
+	//toString
 	@Override
 	public String toString() {
 		return "Usuario [n_usuario=" + n_usuario + ", contraseña=" + contrasenia + "]";
 	}
 	
 	//metodos
-	public static void CargaUsuarios() {
-		Usuario u1 = new Usuario("Gamaliel", "Corrientes 2037", "gamaliel@davinci.edu.ar", 12345678, "ghami", "ghamiaprobanos1");
-		Usuario u2 = new Usuario("Victoria", "Martin Fierro 1550", "vicotria@davinci.edu.ar", 46789087, "vicky", "12345678");
-		Usuario u3 = new Usuario("Caterina", "Quesada 3849", "caterina@davinci.edu.ar", 46756432, "cate", "87654321");
-		usuarios.add(u1);
-		usuarios.add(u2);
-		usuarios.add(u3);
-		Cuenta.cuentas.add(new Cuenta(u1, 10000));
-		Cuenta.cuentas.add(new Cuenta(u2, 25000));
-		Cuenta.cuentas.add(new Cuenta(u3, 20000));
-
-	}
 	
-	public static void Login() {
+	public static void login() {
 		//variables
-	    Usuario existente = null;
+	    Cliente existenteCl = null;
+	    Admin existenteAd = null;
 	    Cuenta log = null;
-	    boolean flag1 = false;
-	    boolean flag2 = false;
+	    boolean flagUsu1 = false;
+	    boolean flagUsu2 = false;
+	    String l = "No";
 	    
-	    //login
+	    //check n_usuario
 	    do {
 			
 	    	String ingreso = Validaciones.ValidarLetras("Ingrese su usuario:");
 	    
-	    for (Usuario user : usuarios) {
+	    for (Cliente user : Cliente.clientes) {
 	        if (user.getN_usuario().equals(ingreso)) {
-	            existente = user;
+	            existenteCl = user;
+	            l =  "Cliente";
+	            flagUsu2 = true;
 	            for (Cuenta cuenta : Cuenta.cuentas) {
-					if (cuenta.getUsuario().equals(user)) {
-						log = cuenta;
+					if (cuenta.getCliente().equals(user)) {
+						if (cuenta.getEstado().equals("Bloqueado")) {
+							l = "Bloqueado";
+							break;
+						} else {
+							log = cuenta;
+						}
 					}
 				}
-	            flag1 = true;
+	            flagUsu1 = true;
 	            break;
-	        }
+	        } 
 	    }
-	    if (existente == null) {
-	        JOptionPane.showMessageDialog(null, "El usuario no existe, vuelva a intenrarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+	    
+	    if (!flagUsu1) {
+			for (Admin ad : Admin.administradores) {
+				if (ad.getN_usuario().equals(ingreso)) {
+					existenteAd = ad;
+					l = "Admin";
+					flagUsu2 = true;
+					break;
+				} 
+			}
+		}
+	    
+	    if (!flagUsu2) {
+	        JOptionPane.showMessageDialog(null, "El usuario no existe, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-	        flag1 = false;
+	        flagUsu2 = false;
 	    }
-	    } while (flag1 == false);
 	    
-	    do {
-	    	
-	    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
 	    
-	    if (existente.getContrasenia().equals(ingreso)) {
-	        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido/a " + existente.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
-	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-	        flag2 = true;
-	    } else {
-	        JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION,
-	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-	        flag2 = false;
-	    }
-	    } while (flag2 == false);
-	
+	    } while (!flagUsu2);
 	    
-	    //inicio programa
-	    int eleccion1=0;
 	    
-	    	do { //menu principal
-			
-			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \n Titular: " + log.getUsuario().getNombre() + "\n Saldo actual $" + log.getSaldo() , "INICIO", 0, 0,
-					new ImageIcon(Main.class.getResource("/Img/prueba.png")), Menu.values(), Menu.values());
-			
-			switch (eleccion1) {
-			
-			case 0: //depositar
-				log.depositar();
-				break;
+	    //check contra
+	    boolean flagContra1 = false;
+	    boolean flagContra2 = false;
 
-			case 1: //retirar
-				log.retirar();
-				break;
-				
-			case 2: //transferir
-				log.transferir();
-				break;
-
-			case 3: //ver movimientos
-				log.movimientos();
-				break;
-				
-			case 4: //cerrar sesion
-				JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
-				break;
-				
-			}//fin switch
-			
-			} while (eleccion1 != 4);
 	    
-	}//fin
+	    switch (l) {
+		case "Cliente":
+			 //cliente
+		    do {
+		    	
+		    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
+		    
+		    if (existenteCl.getContrasenia().equals(ingreso)) {
+		        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido/a " + existenteCl.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		        flagContra1 = true;
+		        Cuenta.menuCliente(log); 
+		        break;
+		        
+		    } 
+		    
+		    if (!flagContra1) {
+		    	 JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			        flagContra1 = false;
+			}
+		    
+		    } while (!flagContra1);
+		
+			break;
+
+		case "Admin":
+			  //admin
+		    do {
+		    	
+		    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
+		    
+		    	if (existenteAd.getContrasenia().equals(ingreso)) {
+		    		JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido administrador/a " + existenteAd.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		    		flagContra2 = true;
+		    		Admin.menuAdmin(existenteAd);
+		    		break;
+		    		
+		    	} 
+		    
+		    if (!flagContra2) {
+		    	 JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			        flagContra1 = false;
+			}
+		    
+		    } while (!flagContra2);
+		    
+			break;
+			
+		case "Bloqueado":
+			do {
+				
+			String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
+			if (existenteCl.getContrasenia().equals(ingreso)) {
+	    		flagContra2 = true;
+	    		JOptionPane.showMessageDialog(null, "Su cuenta se encuentra bloqueada, por favor comuniquese \ncon un asesor en la sucursal mas cercana.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+	    		break;
+				}
+			} while (!flagContra2);
+		}
+	      
+	}//funcion
 	
-	public static void Registro() {
+	public static void registro() {
 		
 		String nombre, domicilio, mail, usuario, cont;
 		int dni;
 		
 		nombre = Validaciones.ValidarLetras("Ingrese su nombre: ");
 		domicilio = Validaciones.ValidarContras("Ingrese su domicilio: ");
-		mail = Usuario.IngresoMail();
-		dni = Usuario.IngresoDni();
-		usuario = Usuario.IngresoUser();
-		cont = Usuario.IngresoContra();
+		mail = Usuario.ingresoMail();
+		dni = Usuario.ingresoDni();
+		usuario = Usuario.ingresoUser();
+		cont = Usuario.ingresoContra();
 		
-		Usuario u = new Usuario(nombre, domicilio, mail, dni, usuario, cont);
-		usuarios.add(u);
-		Cuenta.cuentas.add(new Cuenta(u, 15000));		
+		Cliente c = new Cliente(nombre, domicilio, mail, dni, usuario, cont, (int)(Math.random()*100+1));
+		Cliente.clientes.add(c);
+		Cuenta.cuentas.add(new Cuenta(c, 15000));		
 		
 		
 	}//fin
 	
-	public static String IngresoMail() {
+	public static String ingresoMail() {
 		
 		String mail;
 		boolean flag = false;
@@ -182,8 +193,8 @@ public class Usuario extends Persona{
 			mail = Validaciones.ValidarContras("Ingrese su mail: ");
 			
 			if (mail.contains("@") && mail.contains(".com")) {
-				for (Usuario usu : usuarios) {
-					if (mail.equals(usu.getMail())) {
+				for (Cliente cli : Cliente.clientes) {
+					if (mail.equals(cli.getMail())) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 				                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 						flag = false;
@@ -203,7 +214,7 @@ public class Usuario extends Persona{
 	
 	}//fin
 	
-	public static int IngresoDni() {
+	public static int ingresoDni() {
 		
 		String documento;
 		int dni;
@@ -215,8 +226,8 @@ public class Usuario extends Persona{
 			documento = Integer.toString(dni);
 			
 			if (documento.length() >= 8) {
-				for (Usuario usu : usuarios) {
-					if (dni == usu.getDocumento()) {
+				for (Cliente cli : Cliente.clientes) {
+					if (dni == cli.getDocumento()) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 				                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 						flag = false;
@@ -236,7 +247,7 @@ public class Usuario extends Persona{
 	
 	}//fin
 	
-	public static String IngresoUser() {
+	public static String ingresoUser() {
 		
 		String usuario;
 		boolean flag = false;
@@ -245,8 +256,8 @@ public class Usuario extends Persona{
 			
 			usuario = Validaciones.ValidarLetras("Ingrese su nombre de usuario:\n(No puede ingresar números en su nombre de usuario) ");
 			
-		for (Usuario usu : usuarios) {
-			if (usuario.equals(usu.getN_usuario())) {
+		for (Cliente cli : Cliente.clientes) {
+			if (usuario.equals(cli.getN_usuario())) {
 				JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 				flag = false;
@@ -261,7 +272,7 @@ public class Usuario extends Persona{
 	
 	}//fin
 	
-	public static String IngresoContra() {
+	public static String ingresoContra() {
 	
 		String cont, cont2;
 		boolean flag = false;

@@ -4,6 +4,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import Extensiones.Inicio;
+import Logica.Admin;
+import Logica.Cliente;
 import Logica.Usuario;
 
 public class Main {
@@ -14,7 +16,8 @@ public class Main {
 		int eleccion;
 		
 		//inicio
-		Usuario.CargaUsuarios();
+		Cliente.cargaClientes();
+		Admin.cargaAdmins();
 		JOptionPane.showMessageDialog(null, "Bienvenido al Banco de la Nacion Argentina!", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
 				new ImageIcon(Main.class.getResource("/Img/prueba.png")));
 		do {	
@@ -22,10 +25,10 @@ public class Main {
 					new ImageIcon(Main.class.getResource("/Img/prueba.png")), Inicio.values(), Inicio.values());
 		switch (eleccion) {
 		case 0: //iniciar sesion
-			Usuario.Login();
+			Usuario.login();
 			break;
 		case 1: //registrarse
-			Usuario.Registro();
+			Usuario.registro();
 			break;
 		case 2: //salir
 			JOptionPane.showMessageDialog(null, "Hasta luego! ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
