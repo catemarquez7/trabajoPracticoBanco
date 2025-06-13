@@ -7,3 +7,7 @@
 <p>Diagrama de clases:</p>
 
 <img src="diagrama.png" alt="diagrama de clases" >
+
+<p>Diagrama de clases:</p>
+
+<img src="diagrama.png" alt="diagrama de clases" >
