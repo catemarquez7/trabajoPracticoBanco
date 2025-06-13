@@ -6,7 +6,7 @@
 
 <p>Diagrama de clases:</p>
 
-<img src="diagrama.png" alt="diagrama de clases" >
+<img src="Consigna de segundo tp banco.docx" alt="consigna" >
 
 <p>Diagrama de clases:</p>
 
