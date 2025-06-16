@@ -53,7 +53,7 @@ public class Admin extends Usuario{
 	    
     	do { //menu principal
 		eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \nEmpleado: " + ad.getNombre(), "INICIO", 0, 0,
-				new ImageIcon(Main.class.getResource("/Img/prueba.png")), MenuAdmin.values(), MenuAdmin.values());
+				new ImageIcon(Main.class.getResource("/Img/admin.png")), MenuAdmin.values(), MenuAdmin.values());
 		
 		switch (eleccion1) {
 		
@@ -66,8 +66,8 @@ public class Admin extends Usuario{
 			break;
 			
 		case 2: //cerrar sesion
-			JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
-					new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			JOptionPane.showMessageDialog(null, "Su sesión ha finalizado.", "ADIOS!", JOptionPane.DEFAULT_OPTION,
+					new ImageIcon(Main.class.getResource("/Img/banco.png")));
 			break;
 			
 		}//fin switch
@@ -83,12 +83,12 @@ public class Admin extends Usuario{
 			disponiblesMenu[i] = info;
 				}	
 		//funcion
-		String opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el cliente al cual debe bloquear:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/prueba.png")), disponiblesMenu, disponiblesMenu[0]);	
+		String opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el cliente al cual debe bloquear:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/clienteadmin.png")), disponiblesMenu, disponiblesMenu[0]);	
 
 		for (int i = 0; i < Cuenta.cuentas.size(); i++) {
 			if (Cuenta.cuentas.get(i).getCliente().getN_usuario().equals(opcion)) {
 				Cuenta.cuentas.get(i).setEstado("Bloqueado");
-			JOptionPane.showMessageDialog(null, "La cuenta de  " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ha sido bloqueada con exito.", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));	
+			JOptionPane.showMessageDialog(null, "La cuenta de  " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ha sido bloqueada con éxito.", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/block.png")));	
 
 			}
 		}
@@ -102,7 +102,7 @@ public class Admin extends Usuario{
 				disponiblesMenu[i] = info;
 						}	
 			//funcion
-			String opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el cliente del cual quiere ver sus movimientos:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/prueba.png")), disponiblesMenu, disponiblesMenu[0]);	
+			String opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el cliente del cual quiere ver sus movimientos:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/clienteadmin.png")), disponiblesMenu, disponiblesMenu[0]);	
 
 			for (int i = 0; i < Cuenta.cuentas.size(); i++) {
 				if (Cuenta.cuentas.get(i).getCliente().getN_usuario().equals(opcion)) {

@@ -18,11 +18,11 @@ public class Main {
 		//inicio
 		Cliente.cargaClientes();
 		Admin.cargaAdmins();
-		JOptionPane.showMessageDialog(null, "Bienvenido al Banco de la Nacion Argentina!", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
-				new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		JOptionPane.showMessageDialog(null, "Bienvenido al Banco de la Nación Argentina!", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
+				new ImageIcon(Main.class.getResource("/Img/banco.png")));
 		do {	
 			eleccion = JOptionPane.showOptionDialog(null, "Seleccione: ", "INICIO DE SESION", 0, 0,
-					new ImageIcon(Main.class.getResource("/Img/prueba.png")), Inicio.values(), Inicio.values());
+					new ImageIcon(Main.class.getResource("/Img/inicio.png")), Inicio.values(), Inicio.values());
 		switch (eleccion) {
 		case 0: //iniciar sesion
 			Usuario.login();
@@ -32,7 +32,7 @@ public class Main {
 			break;
 		case 2: //salir
 			JOptionPane.showMessageDialog(null, "Hasta luego! ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
-					new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+					new ImageIcon(Main.class.getResource("/Img/banco.png")));
 			break;
 		}//fin switch
 		} while (eleccion != 2);

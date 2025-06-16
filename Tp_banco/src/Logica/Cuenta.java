@@ -82,7 +82,7 @@ public class Cuenta {
 	    	do { //menu principal
 			
 			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \nTitular: " + log.getCliente().getNombre() + "\n Saldo actual $" + log.getSaldo() , "INICIO", 0, 0,
-					new ImageIcon(Main.class.getResource("/Img/prueba.png")), MenuCliente.values(), MenuCliente.values());
+					new ImageIcon(Main.class.getResource("/Img/cliente.png")), MenuCliente.values(), MenuCliente.values());
 			
 			switch (eleccion1) {
 			
@@ -104,7 +104,7 @@ public class Cuenta {
 				
 			case 4: //cerrar sesion
 				JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						new ImageIcon(Main.class.getResource("/Img/banco.png")));
 				break;
 				
 			}//fin switch
@@ -124,13 +124,13 @@ public class Cuenta {
 		}
 		
 		//transferencia
-		opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el usuario al quien desea transferirle:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/prueba.png")), disponiblesMenu, disponiblesMenu[0]);	
+		opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el usuario al quien desea transferirle:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/cliente.png")), disponiblesMenu, disponiblesMenu[0]);	
 
 		for (int i = 0; i < disponibles.size(); i++) {
 			if (disponibles.get(i).getCliente().getN_usuario().equals(opcion)) {
-				JOptionPane.showMessageDialog(null, disponibles.get(i).getCliente().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				JOptionPane.showMessageDialog(null, disponibles.get(i).getCliente().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/tranferencia.png")));
 				
-				monto = this.ValidarSaldo("Escriba el monto a transferir. \nUsted cuenta con $" + this.getSaldo());
+				monto = this.ValidarSaldo("Escriba el monto a transferir.\nUsted cuenta con $" + this.getSaldo());
 				
 				disponibles.get(i).setSaldo(disponibles.get(i).getSaldo()+monto);
 				this.setSaldo(this.getSaldo()-monto);
@@ -139,7 +139,7 @@ public class Cuenta {
 				this.movimientos.add("Transferiste $" + monto + " a " + disponibles.get(i).getCliente().getN_usuario());
 				disponibles.get(i).getMovimientos().add("Recibiste $" + monto + " de " + this.getCliente().getN_usuario());
 				
-				JOptionPane.showMessageDialog(null, "Ahora " + disponibles.get(i).getCliente().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo() + "\n Y vos con $" + this.getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				JOptionPane.showMessageDialog(null, "Ahora " + disponibles.get(i).getCliente().getNombre() + " cuenta con $" + disponibles.get(i).getSaldo() + "\n Y vos con $" + this.getSaldo(), "TRANSFERENCIA", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/tranferencia.png")));
 			}
 		}
 		
@@ -156,12 +156,12 @@ public class Cuenta {
 				}		
 
 		//deposito	
-		opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el usuario al quien desea depositarle:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/prueba.png")), disponiblesMenu, disponiblesMenu[0]);	
+		opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el usuario al quien desea depositarle:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/cliente.png")), disponiblesMenu, disponiblesMenu[0]);	
 
 				for (int i = 0; i < cuentas.size(); i++) {
 					if (cuentas.get(i).getCliente().getN_usuario().equals(opcion)) {
 						
-						JOptionPane.showMessageDialog(null, cuentas.get(i).getCliente().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						JOptionPane.showMessageDialog(null, cuentas.get(i).getCliente().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/deposito.png")));
 						
 						monto = Validaciones.ValidarNum("Escriba el monto a depositar.");
 						
@@ -171,7 +171,7 @@ public class Cuenta {
 						this.movimientos.add("Depositaste $" + monto + " a " + cuentas.get(i).getCliente().getN_usuario());
 						cuentas.get(i).getMovimientos().add("Te depositaron $" + monto + " desde " + this.getCliente().getN_usuario());
 						
-						JOptionPane.showMessageDialog(null, "Ahora " + cuentas.get(i).getCliente().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						JOptionPane.showMessageDialog(null, "Ahora " + cuentas.get(i).getCliente().getNombre() + " cuenta con $" + cuentas.get(i).getSaldo(), "DEPOSITO", JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/Img/deposito.png")));
 					}
 				}
 	
@@ -179,13 +179,13 @@ public class Cuenta {
 	}
 	
 	public void retirar() {
-		JOptionPane.showMessageDialog(null, this.getCliente().getNombre() + ", contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		JOptionPane.showMessageDialog(null, this.getCliente().getNombre() + ", contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/cliente.png")));
 		
 		double monto = this.ValidarSaldo("Ingrese el monto a retirar:");
 		
 		this.setSaldo(this.getSaldo()-monto);
 		
-		JOptionPane.showMessageDialog(null, this.getCliente().getNombre() + ", ahora contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		JOptionPane.showMessageDialog(null, this.getCliente().getNombre() + ", ahora contas con con $" + this.getSaldo(), "EXTRACCION", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/retirar.png")));
 		
 		//registro movimientos
 		this.movimientos.add("Retiraste $" + monto);
@@ -196,7 +196,7 @@ public class Cuenta {
 		
 		if (movimientos.isEmpty()) {
 			
-	        JOptionPane.showMessageDialog(null, "No hay movimientos registrados.", "MOVIMIENTOS", JOptionPane.INFORMATION_MESSAGE);
+	        JOptionPane.showMessageDialog(null, "No hay movimientos registrados.", "MOVIMIENTOS", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/movimientos.png")));
 	        
 	    } else {
 	    	
@@ -205,7 +205,7 @@ public class Cuenta {
 	            historial += mov + "\n";
 	            
 	        }
-	        JOptionPane.showMessageDialog(null, historial.toString(), "MOVIMIENTOS", JOptionPane.INFORMATION_MESSAGE);
+	        JOptionPane.showMessageDialog(null, historial.toString(), "MOVIMIENTOS", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/movimientos.png")));
 	    }
 	}
 	
@@ -231,16 +231,16 @@ public class Cuenta {
 			flag = true;
 			do {
 				data = (String) JOptionPane.showInputDialog(null, mensaje, "INGRESO", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Validaciones.class.getResource("/Img/prueba.png")), null, null);
+						new ImageIcon(Validaciones.class.getResource("/Img/validacion.png")), null, null);
 				if (data.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "No puede haber espacios en blanco,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				}
 			} while (data.isEmpty());
 			for (int i = 0; i < data.length(); i++) {
 				if (!Character.isDigit(data.charAt(i))) {
-					JOptionPane.showMessageDialog(null, "No se pueden ingresar caracteres alfanumericos,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+					JOptionPane.showMessageDialog(null, "No se pueden ingresar caracteres alfanuméricos,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 					flag = false;
 					break;
 				}
@@ -249,18 +249,18 @@ public class Cuenta {
 			    numero = Integer.parseInt(data);
 			    if (numero <= 0) {
 			    	JOptionPane.showMessageDialog(null, "No se pueden ingresar numeros menores a 0,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 			        flag = false;
 			    }
 			}
 			
 			if (flag) {
 				if (numero <= this.getSaldo()) {
-				 	JOptionPane.showMessageDialog(null, "Excelente! Se realizo con exito.", "LISTO!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				 	JOptionPane.showMessageDialog(null, "Excelente! Se realizó con éxito.", "LISTO!", JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Main.class.getResource("/Img/sivalidacion.png")));
 				} else {
-					JOptionPane.showMessageDialog(null, "No puede ingresar un monto mayor a su saldo disponible.\nIntentelo nuevamente.", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+					JOptionPane.showMessageDialog(null, "No puede ingresar un monto mayor a su saldo disponible.\nInténtelo nuevamente.", "ERROR!", JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 					flag = false;
 				}
 			}

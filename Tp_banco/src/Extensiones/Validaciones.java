@@ -18,16 +18,16 @@ public class Validaciones {
 			flag = true;
 			do {
 				data = (String) JOptionPane.showInputDialog(null, mensaje, "INGRESO", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Validaciones.class.getResource("/Img/prueba.png")), null, null);
+						new ImageIcon(Validaciones.class.getResource("/Img/validacion.png")), null, null);
 				if (data.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "No puede haber espacios en blanco,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				}
 			} while (data.isEmpty());
 			for (int i = 0; i < data.length(); i++) {
 				if (!Character.isDigit(data.charAt(i))) {
-					JOptionPane.showMessageDialog(null, "No se pueden ingresar caracteres alfannumericos,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+					JOptionPane.showMessageDialog(null, "No se pueden ingresar caracteres alfanuméricos,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 					flag = false;
 					break;
 				}
@@ -35,8 +35,8 @@ public class Validaciones {
 			if (flag) {
 			    numero = Integer.parseInt(data);
 			    if (numero <= 0) {
-			    	JOptionPane.showMessageDialog(null, "No se pueden ingresar numeros menores a 0,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-							new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			    	JOptionPane.showMessageDialog(null, "No se pueden ingresar números menores a 0,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 			        flag = false;
 			    }
 			}
@@ -56,16 +56,16 @@ public class Validaciones {
 			flag = true;
 		do {
 			data = (String) JOptionPane.showInputDialog(null, mensaje, "INGRESO", JOptionPane.DEFAULT_OPTION,
-					new ImageIcon(Validaciones.class.getResource("/Img/prueba.png")), null, null);
+					new ImageIcon(Validaciones.class.getResource("/Img/validacion.png")), null, null);
 			if (data.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No puede haber espacios en blanco,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 			}
 		} while (data.isEmpty());
 		for (int i = 0; i < data.length(); i++) {
             if (Character.isDigit(data.charAt(i))) {
             	JOptionPane.showMessageDialog(null, "No se pueden ingresar números,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
                 flag = false;
                 break;
             }
@@ -83,10 +83,10 @@ public class Validaciones {
 		
 		do {
 			data = (String) JOptionPane.showInputDialog(null, mensaje, "INGRESO", JOptionPane.DEFAULT_OPTION,
-					new ImageIcon(Validaciones.class.getResource("/Img/prueba.png")), null, null);
+					new ImageIcon(Validaciones.class.getResource("/Img/validacion.png")), null, null);
 			if (data.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No puede haber espacios en blanco,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-						new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+						new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 			}
 		} while (data.isEmpty());
 

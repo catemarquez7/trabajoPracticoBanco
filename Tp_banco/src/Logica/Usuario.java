@@ -90,7 +90,7 @@ public abstract class Usuario extends Persona{
 	    
 	    if (!flagUsu2) {
 	        JOptionPane.showMessageDialog(null, "El usuario no existe, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-	                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+	                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 	        flagUsu2 = false;
 	    }
 	    
@@ -111,7 +111,7 @@ public abstract class Usuario extends Persona{
 		    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
 		    
 		    if (existenteCl.getContrasenia().equals(ingreso)) {
-		        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido/a " + existenteCl.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		        JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido/a " + existenteCl.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/sivalidacion.png")));
 		        flagContra1 = true;
 		        Cuenta.menuCliente(log); 
 		        break;
@@ -119,7 +119,7 @@ public abstract class Usuario extends Persona{
 		    } 
 		    
 		    if (!flagContra1) {
-		    	 JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		    	 JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 			        flagContra1 = false;
 			}
 		    
@@ -134,7 +134,7 @@ public abstract class Usuario extends Persona{
 		    	String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
 		    
 		    	if (existenteAd.getContrasenia().equals(ingreso)) {
-		    		JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido administrador/a " + existenteAd.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		    		JOptionPane.showMessageDialog(null, "Usuario correcto, bienvenido administrador/a " + existenteAd.getNombre() + "!" ,"BIENVENIDO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/sivalidacion.png")));
 		    		flagContra2 = true;
 		    		Admin.menuAdmin(existenteAd);
 		    		break;
@@ -142,7 +142,7 @@ public abstract class Usuario extends Persona{
 		    	} 
 		    
 		    if (!flagContra2) {
-		    	 JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		    	 JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 			        flagContra1 = false;
 			}
 		    
@@ -156,7 +156,7 @@ public abstract class Usuario extends Persona{
 			String ingreso = Validaciones.ValidarContras("Ingrese su contraseña:");
 			if (existenteCl.getContrasenia().equals(ingreso)) {
 	    		flagContra2 = true;
-	    		JOptionPane.showMessageDialog(null, "Su cuenta se encuentra bloqueada, por favor comuniquese \ncon un asesor en la sucursal mas cercana.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+	    		JOptionPane.showMessageDialog(null, "Su cuenta se encuentra bloqueada, por favor comuniquese \ncon un asesor en la sucursal mas cercana.", "ERROR!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/bloqueo.png")));
 	    		break;
 				}
 			} while (!flagContra2);
@@ -196,7 +196,7 @@ public abstract class Usuario extends Persona{
 				for (Cliente cli : Cliente.clientes) {
 					if (mail.equals(cli.getMail())) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-				                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 						flag = false;
 						break;
 					}else {
@@ -205,7 +205,7 @@ public abstract class Usuario extends Persona{
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "El mail ingresado no es válido (falta @ o .com)", "ERROR!", JOptionPane.DEFAULT_OPTION,
-		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				flag = false;
 			}
 		} while (flag == false);
@@ -229,7 +229,7 @@ public abstract class Usuario extends Persona{
 				for (Cliente cli : Cliente.clientes) {
 					if (dni == cli.getDocumento()) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-				                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+				                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 						flag = false;
 						break;
 					}else {
@@ -238,7 +238,7 @@ public abstract class Usuario extends Persona{
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Su número de documento debe tener mas de 8 dígitos.", "ERROR!", JOptionPane.DEFAULT_OPTION,
-		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				flag = false;
 			}
 		} while (flag == false);
@@ -259,7 +259,7 @@ public abstract class Usuario extends Persona{
 		for (Cliente cli : Cliente.clientes) {
 			if (usuario.equals(cli.getN_usuario())) {
 				JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				flag = false;
 				break;
 			}else {
@@ -286,16 +286,16 @@ public abstract class Usuario extends Persona{
 				
 				if (cont.equals(cont2)) {
 					JOptionPane.showMessageDialog(null, "Todos los datos son válidos, su usuario fue registrado", "BIENVENIDO!", JOptionPane.DEFAULT_OPTION,
-			                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			                new ImageIcon(Main.class.getResource("/Img/sivalidacion.png")));
 					flag = true;
 				} else {
 					JOptionPane.showMessageDialog(null, "Las contraseñas no son idénticas, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
-			                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+			                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 					flag = false;
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Su contraseña debe tener 8 dígitos", "ERROR!", JOptionPane.DEFAULT_OPTION,
-		                new ImageIcon(Main.class.getResource("/Img/prueba.png")));
+		                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				flag = false;
 			}
 			
