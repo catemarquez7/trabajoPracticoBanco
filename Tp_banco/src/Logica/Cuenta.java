@@ -81,7 +81,7 @@ public class Cuenta {
 		    
 	    	do { //menu principal
 			
-			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \nTitular: " + log.getCliente().getNombre() + "\n Saldo actual $" + log.getSaldo() , "INICIO", 0, 0,
+			eleccion1 = JOptionPane.showOptionDialog(null, "Seleccione: \nTitular: " + log.getCliente().getNombre() + "\nSaldo actual $" + log.getSaldo() , "INICIO", 0, 0,
 					new ImageIcon(Main.class.getResource("/Img/cliente.png")), MenuCliente.values(), MenuCliente.values());
 			
 			switch (eleccion1) {
@@ -222,10 +222,10 @@ public class Cuenta {
 	}
 	
 	//valida -0, enter, letras y !<saldo
-	public int ValidarSaldo(String mensaje) {
+	public double ValidarSaldo(String mensaje) {
 		String data;
 		boolean flag;
-		int numero = 0;
+		double numero = 0;
 		
 		do {
 			flag = true;
@@ -246,7 +246,7 @@ public class Cuenta {
 				}
 			}
 			if (flag) {
-			    numero = Integer.parseInt(data);
+			    numero = Double.parseDouble(data);
 			    if (numero <= 0) {
 			    	JOptionPane.showMessageDialog(null, "No se pueden ingresar numeros menores a 0,\nvuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 							new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
