@@ -226,8 +226,8 @@ public abstract class Usuario extends Persona{
 			documento = Integer.toString(dni);
 			
 			if (documento.length() >= 8) {
-				for (Cliente cli : Cliente.clientes) {
-					if (dni == cli.getDocumento()) {
+				for (Cuenta cli : Cuenta.cuentas) {
+					if (dni == cli.getCliente().getDocumento()) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 				                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 						flag = false;
@@ -256,8 +256,8 @@ public abstract class Usuario extends Persona{
 			
 			usuario = Validaciones.ValidarLetras("Ingrese su nombre de usuario:\n(No puede ingresar números en su nombre de usuario) ");
 			
-		for (Cliente cli : Cliente.clientes) {
-			if (usuario.equals(cli.getN_usuario())) {
+		for (Cuenta cli : Cuenta.cuentas) {
+			if (usuario.equals(cli.getCliente().getN_usuario())) {
 				JOptionPane.showMessageDialog(null, "Usuario ya registrado, vuelva a intentarlo", "ERROR!", JOptionPane.DEFAULT_OPTION,
 		                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
 				flag = false;

@@ -57,22 +57,26 @@ public class Admin extends Usuario{
 		
 		switch (eleccion1) {
 		
-		case 0: //bloquear cliente
+		case 0: //desbloquear cliente
+			desbloquearCliente();
+			break;
+			
+		case 1: //bloquear cliente
 			bloquearCliente();
 			break;
 
-		case 1: //ver movimientos
+		case 2: //ver movimientos
 			verMovimientos();
 			break;
 			
-		case 2: //cerrar sesion
+		case 3: //cerrar sesion
 			JOptionPane.showMessageDialog(null, "Su sesión ha finalizado.", "ADIOS!", JOptionPane.DEFAULT_OPTION,
 					new ImageIcon(Main.class.getResource("/Img/banco.png")));
 			break;
 			
 		}//fin switch
 		
-		} while (eleccion1 != 2);
+		} while (eleccion1 != 3);
 	}
 	
 	public static void bloquearCliente() {
@@ -84,14 +88,37 @@ public class Admin extends Usuario{
 				}	
 		//funcion
 		String opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el cliente al cual debe bloquear:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/clienteadmin.png")), disponiblesMenu, disponiblesMenu[0]);	
-
 		for (int i = 0; i < Cuenta.cuentas.size(); i++) {
 			if (Cuenta.cuentas.get(i).getCliente().getN_usuario().equals(opcion)) {
-				Cuenta.cuentas.get(i).setEstado("Bloqueado");
-			JOptionPane.showMessageDialog(null, "La cuenta de  " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ha sido bloqueada con éxito.", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/block.png")));	
-
+				if (Cuenta.cuentas.get(i).getEstado().equals("Activo")) {
+					Cuenta.cuentas.get(i).setEstado("Bloqueado");
+					JOptionPane.showMessageDialog(null, "La cuenta de " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ha sido bloqueada con éxito.", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/block.png")));
+				}else {
+					JOptionPane.showMessageDialog(null, "La cuenta de " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ya esta bloqueada", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/block.png")));
+				}
 			}
 		}
+	}
+	
+	public static void desbloquearCliente() {
+		//variables
+				String[] disponiblesMenu = new String[Cuenta.cuentas.size()];
+				for (int i = 0; i < Cuenta.cuentas.size(); i++) {
+					String info = Cuenta.cuentas.get(i).getCliente().getN_usuario();
+					disponiblesMenu[i] = info;
+						}	
+				//funcion
+				String opcion = (String)JOptionPane.showInputDialog(null, "Seleccione el cliente al cual debe desbloquear:", "SELECCION", 0, new ImageIcon(Main.class.getResource("/Img/clienteadmin.png")), disponiblesMenu, disponiblesMenu[0]);	
+				for (int i = 0; i < Cuenta.cuentas.size(); i++) {
+					if (Cuenta.cuentas.get(i).getCliente().getN_usuario().equals(opcion)) {
+						if (Cuenta.cuentas.get(i).getEstado().equals("Bloqueado")) {
+							Cuenta.cuentas.get(i).setEstado("Activo");
+							JOptionPane.showMessageDialog(null, "La cuenta de " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ha sido desbloqueada con éxito.", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/block.png")));
+						}else {
+							JOptionPane.showMessageDialog(null, "La cuenta de " +  Cuenta.cuentas.get(i).getCliente().getN_usuario() + " ya esta desbloqueada", "LISTO!", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/block.png")));
+						}
+					}
+				}
 	}
 	
 	public static void verMovimientos() {

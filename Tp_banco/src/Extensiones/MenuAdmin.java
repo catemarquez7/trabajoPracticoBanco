@@ -2,7 +2,7 @@ package Extensiones;
 
 public enum MenuAdmin {
 
-		Bloquear_cliente, Ver_Movimientos, Cerrar_Sesion;
+		Desbloquear_cliente, Bloquear_cliente, Ver_Movimientos, Cerrar_Sesion;
 		
 	
 }
