@@ -1,11 +1,13 @@
 package Logica;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import Extensiones.MenuCliente;
+import Extensiones.MenuRendimientos;
 import Extensiones.Validaciones;
 import Usuario.Main;
 
@@ -16,16 +18,19 @@ public class Cuenta {
 	protected double saldo;
 	protected String estado;
 	protected LinkedList<String> movimientos = new LinkedList<String>();
+	protected LinkedList<String> historial = new LinkedList<String>();
+	protected double saldoInversion;
+	protected LocalDate fechaActual;
 	
 	//clase
 	static LinkedList<Cuenta> cuentas = new LinkedList<Cuenta>();
-
 
 	//constructor
 	public Cuenta(Cliente cliente, double saldo) {
 		this.cliente = cliente;
 		this.saldo = saldo;
 		this.estado = "Activo";
+		this.fechaActual = LocalDate.now();
 	}
 
 	//getters y setters
@@ -68,16 +73,43 @@ public class Cuenta {
 	public void setMovimientos(LinkedList<String> movimientos) {
 		this.movimientos = movimientos;
 	}
+	
+	public LinkedList<String> getHistorial() {
+		return historial;
+	}
 
-	@Override
-	public String toString() {
-		return "Cuenta [clente=" + cliente + ", saldo=" + saldo + ", movimientos=" + movimientos + "]";
+	public void setHistorial(LinkedList<String> historial) {
+		this.historial = historial;
+	}
+
+	public double getSaldoInversion() {
+		return saldoInversion;
+	}
+
+	public void setSaldoInversion(double saldoInversion) {
+		this.saldoInversion = saldoInversion;
+	}
+
+	public LocalDate getFechaActual() {
+		return fechaActual;
+	}
+
+	public void setFechaActual(LocalDate fechaActual) {
+		this.fechaActual = fechaActual;
 	}
 	
-	//metodos
+	@Override
+	public String toString() {
+		return "Cuenta [cliente=" + cliente + ", saldo=" + saldo + ", estado=" + estado + ", movimientos=" + movimientos
+				+ ", historial=" + historial + ", saldoInversion=" + saldoInversion + ", fechaActual=" + fechaActual
+				+ "]";
+	}
 	
+	
+	//metodos
+
 	public static void menuCliente(Cuenta log) {
-		 int eleccion1=0;
+		 int eleccion1=0, eleccion2=0 ;
 		    
 	    	do { //menu principal
 			
@@ -102,14 +134,47 @@ public class Cuenta {
 				log.movimientos();
 				break;
 				
-			case 4: //cerrar sesion
-				JOptionPane.showMessageDialog(null, "Su sesion ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
+			case 4: //ver movimientos
+					
+				do {
+					
+				eleccion2 = JOptionPane.showOptionDialog(null, "Seleccione: \nTitular: " + log.getCliente().getNombre() + "\nSaldo actual $" + log.getSaldo() , "INICIO", 0, 0,
+						new ImageIcon(Main.class.getResource("/Img/cliente.png")), MenuRendimientos.values(), MenuRendimientos.values());
+				
+				switch (eleccion2) {
+				
+				case 0: //rendir dinero
+					log.rendir();
+					break;
+
+				case 1: //pasar_dia
+					log.pasardia();
+					break;
+					
+				case 2: //ver rendimientos
+					log.verrendimientos();
+					break;
+					
+				case 3: //volver
+					
+					JOptionPane.showMessageDialog(null, "Regresando al menu principal. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Main.class.getResource("/Img/cliente.png")));
+					break;
+					
+				}//fin switch movimientos
+				
+				} while (eleccion2 != 3);
+				
+				break;
+				
+			case 5: //cerrar sesion
+				JOptionPane.showMessageDialog(null, "Su sesión ha finalizado. ", "ADIOS!", JOptionPane.DEFAULT_OPTION,
 						new ImageIcon(Main.class.getResource("/Img/banco.png")));
 				break;
 				
 			}//fin switch
 			
-			} while (eleccion1 != 4);
+			} while (eleccion1 != 5);
 	}
 	
 	public void transferir() {
@@ -267,12 +332,84 @@ public class Cuenta {
 			
 		} while (!flag);
 		
-		return numero;
-	}//fin
+		return numero;	
+	}
+	
+	public void rendir() {
+		
+		double monto, tasa;
+		
+		if (this.getSaldo() <= 0) {
+	        JOptionPane.showMessageDialog(null, "No tenés saldo suficiente para invertir.", "ERROR", JOptionPane.DEFAULT_OPTION,
+	                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
+	        return;
+	    }
 
+	    monto = this.ValidarSaldo("Ingrese cuánto desea invertir.\nSaldo disponible: $" + this.getSaldo());
+	    
+	    this.setSaldo(this.getSaldo() - monto);
+	    this.setSaldoInversion(this.getSaldoInversion() + monto);
+
+	    tasa = Math.random() * 0.05 + 0.01;
+	    
+	    if (this.getFechaActual() == null) {
+	        this.setFechaActual(LocalDate.now());
+	    }
+
+	    this.getHistorial().add("Rendiste $" + monto + " el día " + this.getFechaActual() + " con tasa " + (int)(tasa * 100) + "%");
+		this.movimientos.add("Rendiste $" + monto);
+
+
+	    JOptionPane.showMessageDialog(null, "Inversión realizada con éxito.\nMonto invertido: $" + monto + "\nTasa: " + (int)(tasa * 100) + "%", "ÉXITO", JOptionPane.DEFAULT_OPTION,
+	            new ImageIcon(Main.class.getResource("/Img/retirar.png")));
+	}
+
+	public void pasardia() {
+		
+		double ganancia, tasa;
+
+		
+		if (this.getSaldoInversion() <= 0) {
+	        JOptionPane.showMessageDialog(null, "No tenés inversión activa para generar rendimiento.", "ERROR", JOptionPane.DEFAULT_OPTION,
+	                new ImageIcon(Main.class.getResource("/Img/novalidacion.png")));
+	        return;
+	    }
+
+	    if (this.getFechaActual() == null) {
+	        this.setFechaActual(LocalDate.now());
+	    }
+
+	    this.setFechaActual(this.getFechaActual().plusDays(1));
+
+	    tasa = Math.random() * 0.05 + 0.01;
+
+	    ganancia = this.getSaldoInversion() * tasa;
+	    this.setSaldoInversion(this.getSaldoInversion() + ganancia);
+
+	    this.getHistorial().add("Rendiste $" + ganancia + " el día " + this.getFechaActual() + " con tasa " + (int)(tasa * 100) + "%");
+
+	    JOptionPane.showMessageDialog(null, "Día simulado con éxito.\nTasa aplicada: " + (int)(tasa * 100) + "%\nNuevo saldo en inversión: $" + (int)this.getSaldoInversion(), 
+	            "RENDIMIENTO DIARIO", JOptionPane.DEFAULT_OPTION,
+	            new ImageIcon(Main.class.getResource("/Img/sivalidacion.png")));
+		
+	}
 	
-	
-	
+	public void verrendimientos() {
+		
+		if (historial.isEmpty()) {
+			
+	        JOptionPane.showMessageDialog(null, "No hay movimientos registrados.", "MOVIMIENTOS", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/movimientos.png")));
+	        
+	    } else {
+	    	
+	    	String historialtexto = "Historial de movimientos:\n";
+	        for (String his : historial) {
+	            historialtexto += his + "\n";
+	        }
+	        JOptionPane.showMessageDialog(null, historialtexto.toString(), "MOVIMIENTOS", JOptionPane.DEFAULT_OPTION, new ImageIcon(Main.class.getResource("/Img/movimientos.png")));
+	    }
+		
+	}
 	
 	
 	
