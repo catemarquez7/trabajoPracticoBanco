@@ -14,7 +14,7 @@ Este es un trabajo práctico realizado también en la materia Programación Orie
 
 ---
 
-## 🎀 Funcionalidades
+## 🔮 Funcionalidades
 - Posee dos roles, cliente y administrador
 - Tiene sistema de registro y login de usuarios
 - El cliente puede ver su saldo, sus movimientos pasados. También transferir a otros usuarios, depositar y retirar su dinero
