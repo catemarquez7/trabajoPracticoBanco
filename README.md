@@ -1,8 +1,8 @@
-# 📝 Sistema bancario | 2do cuatrimestre
+# 🏦 Sistema bancario 
 
 Alumnas: Victoria Cossi Mazza y Caterina Marquez.
 
-Este es un trabajo práctico realizado también en la materia Programación Orientada a Objetos, donde con nuestro programa simulamos un sistema bancario.  
+Este es un trabajo práctico realizado también en la materia Programación Orientada a Objetos, donde con nuestro programa simulamos un sistema bancario. Segundo cuatrimestre.
 
 ---
 
